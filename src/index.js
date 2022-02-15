@@ -1,6 +1,46 @@
-/**
- * This file is just a silly example to show everything working in the browser.
- * When you're ready to start on your site, clear the file. Happy hacking!
- **/
+import { registerImage } from './lazy'
+import ImageLogs from './ImageLogs'
 
-console.log('Happy hacking :)')
+const url = 'https://randomfox.ca/floof'
+let mountNode = document.querySelector('#images')
+const addButton = document.querySelector('#addButton')
+const cleanButton = document.querySelector('#cleanButton')
+const logInstance = ImageLogs.getInstance()
+
+const createImageNode = async () => {
+    try {
+        const container = document.createElement('div')
+        container.className = 'mx-auto w-80 bg-gray-200 rounded-2xl mt-1'
+        
+        const response = await fetch(url)
+        const imageInfo = await response.json()
+
+        const imageUrl = imageInfo.image
+        
+        
+        const image = document.createElement('img')
+        image.className = 'w-full object-cover overflow-hidden rounded-2xl'
+        image.dataset.url = imageUrl
+        
+        container.append(image)
+        registerImage(container)
+        mountNode.appendChild(container)
+        logInstance.appendedImages++    
+        logInstance.printLog()
+        
+    } catch {
+        alert('ups fallo en cargar la imagen intenta denuevo')
+    }
+}
+
+const addImage = () => createImageNode()
+addButton.addEventListener('click', addImage)
+
+function removeImages() {
+    const mainContainer = document.querySelector('#main-container')
+    const clone = mountNode.cloneNode(false)
+    mainContainer.removeChild(mountNode)
+    mountNode = clone
+    mainContainer.insertAdjacentElement('beforeend', clone)
+}
+cleanButton.addEventListener('click', removeImages)
