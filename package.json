@@ -7,6 +7,7 @@
     "pre-commit": "pretty-quick --staged",
     "install:husky": "husky install"
   },
+  "homepage": "https://reintristan.github.io/lazy-loading-DOMmanipulation-workshop/",
   "devDependencies": {
     "husky": "7",
     "prettier": "^2.0.5",

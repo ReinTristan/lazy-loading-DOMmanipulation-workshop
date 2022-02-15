@@ -5,6 +5,6 @@ module.exports = {
     src: '/_dist_',
   },
   buildOptions: {
-    baseUrl: '',
+    baseUrl: 'https://reintristan.github.io/lazy-loading-DOMmanipulation-workshop/',
   },
 }
